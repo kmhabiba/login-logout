@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard';
- 
+
 function Login({ setToken, setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5001/api/auth/login', { email, password });
       const { token, username } = response.data;
- 
+
       localStorage.setItem('token', token);
- 
+
       setToken(token);
       setUser(username);
       navigate('/dashboard');
@@ -24,13 +24,13 @@ function Login({ setToken, setUser }) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     }
   };
- 
+
   return (
-<div className="auth-container">
-<h2>Login</h2>
+    <div className="auth-container">
+      <h2>Login</h2>
       {error && <p className="auth-error">{error}</p>}
-<form onSubmit={handleSubmit} className="auth-form">
-<input
+      <form onSubmit={handleSubmit} className="auth-form">
+        <input
           type="email"
           placeholder="Email"
           value={email}
@@ -38,7 +38,7 @@ function Login({ setToken, setUser }) {
           className="auth-input"
           required
         />
-<input
+        <input
           type="password"
           placeholder="Password"
           value={password}
@@ -46,10 +46,10 @@ function Login({ setToken, setUser }) {
           className="auth-input"
           required
         />
-<button type="submit" className="auth-button">Login</button>
-</form>
-</div>
+        <button type="submit" className="auth-button">Login</button>
+      </form>
+    </div>
   );
 }
- 
+
 export default Login;
